@@ -26,6 +26,7 @@ import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAppChatRouteImport } from './routes/_authenticated/app.chat'
 import { Route as AuthenticatedAppHistoryRouteImport } from './routes/_authenticated/app.history'
 import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
+import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/app.settings'
 import { Route as AuthenticatedAppTradeRouteImport } from './routes/_authenticated/app.trade'
 import { Route as AuthenticatedAppWithdrawRouteImport } from './routes/_authenticated/app.withdraw'
 import { Route as AuthenticatedAppHistoryTradeIdRouteImport } from './routes/_authenticated/app.history.$tradeId'
@@ -115,6 +116,12 @@ const AuthenticatedAppNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppSettingsRoute =
+  AuthenticatedAppSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppTradeRoute = AuthenticatedAppTradeRouteImport.update({
   id: '/trade',
   path: '/trade',
@@ -149,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/app/chat': typeof AuthenticatedAppChatRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/app/': typeof AuthenticatedAppIndexRoute
@@ -169,6 +177,7 @@ export interface FileRoutesByTo {
   '/app/chat': typeof AuthenticatedAppChatRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/app': typeof AuthenticatedAppIndexRoute
@@ -192,6 +201,7 @@ export interface FileRoutesById {
   '/_authenticated/app/chat': typeof AuthenticatedAppChatRoute
   '/_authenticated/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
+  '/_authenticated/app/settings': typeof AuthenticatedAppSettingsRoute
   '/_authenticated/app/trade': typeof AuthenticatedAppTradeRoute
   '/_authenticated/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/app/chat'
     | '/app/history'
     | '/app/notifications'
+    | '/app/settings'
     | '/app/trade'
     | '/app/withdraw'
     | '/app/'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/app/chat'
     | '/app/history'
     | '/app/notifications'
+    | '/app/settings'
     | '/app/trade'
     | '/app/withdraw'
     | '/app'
@@ -257,6 +269,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/chat'
     | '/_authenticated/app/history'
     | '/_authenticated/app/notifications'
+    | '/_authenticated/app/settings'
     | '/_authenticated/app/trade'
     | '/_authenticated/app/withdraw'
     | '/_authenticated/app/'
@@ -398,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppNotificationsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/settings': {
+      id: '/_authenticated/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/trade': {
       id: '/_authenticated/app/trade'
       path: '/trade'
@@ -440,6 +460,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppChatRoute: typeof AuthenticatedAppChatRoute
   AuthenticatedAppHistoryRoute: typeof AuthenticatedAppHistoryRouteWithChildren
   AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
+  AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
   AuthenticatedAppTradeRoute: typeof AuthenticatedAppTradeRoute
   AuthenticatedAppWithdrawRoute: typeof AuthenticatedAppWithdrawRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
@@ -449,6 +470,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppChatRoute: AuthenticatedAppChatRoute,
   AuthenticatedAppHistoryRoute: AuthenticatedAppHistoryRouteWithChildren,
   AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
+  AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
   AuthenticatedAppTradeRoute: AuthenticatedAppTradeRoute,
   AuthenticatedAppWithdrawRoute: AuthenticatedAppWithdrawRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
