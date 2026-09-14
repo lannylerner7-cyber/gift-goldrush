@@ -25,6 +25,7 @@ import { Route as LoginVerifyRouteImport } from './routes/login.verify'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppHistoryRouteImport } from './routes/_authenticated/app.history'
 import { Route as AuthenticatedAppTradeRouteImport } from './routes/_authenticated/app.trade'
+import { Route as AuthenticatedAppWithdrawRouteImport } from './routes/_authenticated/app.withdraw'
 import { Route as AuthenticatedAppHistoryTradeIdRouteImport } from './routes/_authenticated/app.history.$tradeId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -106,6 +107,12 @@ const AuthenticatedAppTradeRoute = AuthenticatedAppTradeRouteImport.update({
   path: '/trade',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppWithdrawRoute =
+  AuthenticatedAppWithdrawRouteImport.update({
+    id: '/withdraw',
+    path: '/withdraw',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppHistoryTradeIdRoute =
   AuthenticatedAppHistoryTradeIdRouteImport.update({
     id: '/$tradeId',
@@ -128,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/login/verify': typeof LoginVerifyRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/trade': typeof AuthenticatedAppTradeRoute
+  '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/app/': typeof AuthenticatedAppIndexRoute
   '/app/history/$tradeId': typeof AuthenticatedAppHistoryTradeIdRoute
 }
@@ -145,6 +153,7 @@ export interface FileRoutesByTo {
   '/login/verify': typeof LoginVerifyRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/trade': typeof AuthenticatedAppTradeRoute
+  '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/app': typeof AuthenticatedAppIndexRoute
   '/app/history/$tradeId': typeof AuthenticatedAppHistoryTradeIdRoute
 }
@@ -165,6 +174,7 @@ export interface FileRoutesById {
   '/login/verify': typeof LoginVerifyRoute
   '/_authenticated/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/_authenticated/app/trade': typeof AuthenticatedAppTradeRoute
+  '/_authenticated/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/app/history/$tradeId': typeof AuthenticatedAppHistoryTradeIdRoute
 }
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/login/verify'
     | '/app/history'
     | '/app/trade'
+    | '/app/withdraw'
     | '/app/'
     | '/app/history/$tradeId'
   fileRoutesByTo: FileRoutesByTo
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/login/verify'
     | '/app/history'
     | '/app/trade'
+    | '/app/withdraw'
     | '/app'
     | '/app/history/$tradeId'
   id:
@@ -221,6 +233,7 @@ export interface FileRouteTypes {
     | '/login/verify'
     | '/_authenticated/app/history'
     | '/_authenticated/app/trade'
+    | '/_authenticated/app/withdraw'
     | '/_authenticated/app/'
     | '/_authenticated/app/history/$tradeId'
   fileRoutesById: FileRoutesById
@@ -353,6 +366,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppTradeRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/withdraw': {
+      id: '/_authenticated/app/withdraw'
+      path: '/withdraw'
+      fullPath: '/app/withdraw'
+      preLoaderRoute: typeof AuthenticatedAppWithdrawRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/history/$tradeId': {
       id: '/_authenticated/app/history/$tradeId'
       path: '/$tradeId'
@@ -380,12 +400,14 @@ const AuthenticatedAppHistoryRouteWithChildren =
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppHistoryRoute: typeof AuthenticatedAppHistoryRouteWithChildren
   AuthenticatedAppTradeRoute: typeof AuthenticatedAppTradeRoute
+  AuthenticatedAppWithdrawRoute: typeof AuthenticatedAppWithdrawRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppHistoryRoute: AuthenticatedAppHistoryRouteWithChildren,
   AuthenticatedAppTradeRoute: AuthenticatedAppTradeRoute,
+  AuthenticatedAppWithdrawRoute: AuthenticatedAppWithdrawRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }
 
