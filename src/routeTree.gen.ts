@@ -22,6 +22,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as LoginVerifyRouteImport } from './routes/login.verify'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -87,6 +88,11 @@ const LoginVerifyRoute = LoginVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => LoginRoute,
 } as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -99,8 +105,9 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/app': typeof AuthenticatedAppRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -113,8 +120,8 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/app': typeof AuthenticatedAppRoute
   '/login/verify': typeof LoginVerifyRoute
+  '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -129,8 +136,9 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/_authenticated/app': typeof AuthenticatedAppRoute
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +155,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/app'
     | '/login/verify'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -159,8 +168,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms'
     | '/verify-email'
-    | '/app'
     | '/login/verify'
+    | '/app'
   id:
     | '__root__'
     | '/'
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/_authenticated/app'
     | '/login/verify'
+    | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -285,15 +295,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginVerifyRouteImport
       parentRoute: typeof LoginRoute
     }
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
   }
 }
 
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+}
+
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+}
+
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAppRoute: typeof AuthenticatedAppRoute
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAppRoute: AuthenticatedAppRoute,
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
