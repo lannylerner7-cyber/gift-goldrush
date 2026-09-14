@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as LoginVerifyRouteImport } from './routes/login.verify'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,37 +35,46 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
   path: '/verify-email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginVerifyRoute = LoginVerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => LoginRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/login/verify': typeof LoginVerifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/login/verify': typeof LoginVerifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/login/verify': typeof LoginVerifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/verify-email'
+  fullPaths: '/' | '/login' | '/signup' | '/verify-email' | '/login/verify'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/verify-email'
-  id: '__root__' | '/' | '/login' | '/signup' | '/verify-email'
+  to: '/' | '/login' | '/signup' | '/verify-email' | '/login/verify'
+  id:
+    '__root__' | '/' | '/login' | '/signup' | '/verify-email' | '/login/verify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
+  LoginRoute: typeof LoginRouteWithChildren
   SignupRoute: typeof SignupRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
 }
@@ -99,12 +109,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login/verify': {
+      id: '/login/verify'
+      path: '/verify'
+      fullPath: '/login/verify'
+      preLoaderRoute: typeof LoginVerifyRouteImport
+      parentRoute: typeof LoginRoute
+    }
   }
 }
 
+interface LoginRouteChildren {
+  LoginVerifyRoute: typeof LoginVerifyRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginVerifyRoute: LoginVerifyRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
+  LoginRoute: LoginRouteWithChildren,
   SignupRoute: SignupRoute,
   VerifyEmailRoute: VerifyEmailRoute,
 }
