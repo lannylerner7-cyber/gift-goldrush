@@ -23,6 +23,7 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as LoginVerifyRouteImport } from './routes/login.verify'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppHistoryRouteImport } from './routes/_authenticated/app.history'
 import { Route as AuthenticatedAppTradeRouteImport } from './routes/_authenticated/app.trade'
 
 const IndexRoute = IndexRouteImport.update({
@@ -94,6 +95,11 @@ const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppHistoryRoute = AuthenticatedAppHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppTradeRoute = AuthenticatedAppTradeRouteImport.update({
   id: '/trade',
   path: '/trade',
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/verify-email': typeof VerifyEmailRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/app/history': typeof AuthenticatedAppHistoryRoute
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app/': typeof AuthenticatedAppIndexRoute
 }
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
   '/login/verify': typeof LoginVerifyRoute
+  '/app/history': typeof AuthenticatedAppHistoryRoute
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app': typeof AuthenticatedAppIndexRoute
 }
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/verify-email': typeof VerifyEmailRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/_authenticated/app/history': typeof AuthenticatedAppHistoryRoute
   '/_authenticated/app/trade': typeof AuthenticatedAppTradeRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
@@ -164,6 +173,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/app'
     | '/login/verify'
+    | '/app/history'
     | '/app/trade'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/verify-email'
     | '/login/verify'
+    | '/app/history'
     | '/app/trade'
     | '/app'
   id:
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/_authenticated/app'
     | '/login/verify'
+    | '/_authenticated/app/history'
     | '/_authenticated/app/trade'
     | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
@@ -314,6 +326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/history': {
+      id: '/_authenticated/app/history'
+      path: '/history'
+      fullPath: '/app/history'
+      preLoaderRoute: typeof AuthenticatedAppHistoryRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/trade': {
       id: '/_authenticated/app/trade'
       path: '/trade'
@@ -325,11 +344,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppHistoryRoute: typeof AuthenticatedAppHistoryRoute
   AuthenticatedAppTradeRoute: typeof AuthenticatedAppTradeRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppHistoryRoute: AuthenticatedAppHistoryRoute,
   AuthenticatedAppTradeRoute: AuthenticatedAppTradeRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }
