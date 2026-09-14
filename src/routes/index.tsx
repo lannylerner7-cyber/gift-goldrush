@@ -35,7 +35,7 @@ function useBrands() {
       const { data, error } = await supabase
         .from("gift_card_brands")
         .select("id, name, slug, accent_color")
-        .eq("is_active", true)
+        .eq("is_visible", true)
         .order("sort_order", { ascending: true });
       if (error) throw error;
       return (data ?? []) as BrandLike[];
@@ -49,14 +49,15 @@ function useBanners() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("campaign_banners")
-        .select("id, title, subtitle, accent_color, cta_label, cta_link")
-        .eq("is_visible", true)
+        .select("id, title, subtitle, link")
+        .eq("is_active", true)
         .order("sort_order", { ascending: true });
       if (error) throw error;
       return data ?? [];
     },
   });
 }
+
 
 function useTopRates() {
   return useQuery({
