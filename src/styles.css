@@ -153,9 +153,36 @@
   }
 }
 
+@theme {
+  --animate-pop-in: pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-ticker: ticker-scroll 32s linear infinite;
+  --animate-tilt-tap: tilt-tap 0.35s ease-out;
+  --animate-spin-slow: spin-slow 3s linear infinite;
+}
+
+@keyframes tilt-tap {
+  0% {
+    transform: perspective(600px) rotateX(0) scale(1);
+  }
+  45% {
+    transform: perspective(600px) rotateX(9deg) scale(0.97);
+  }
+  100% {
+    transform: perspective(600px) rotateX(0) scale(1);
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility text-money {
   color: var(--money);
 }
+
 
 @utility bg-night-gradient {
   background-image: radial-gradient(
