@@ -23,6 +23,7 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as LoginVerifyRouteImport } from './routes/login.verify'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppChatRouteImport } from './routes/_authenticated/app.chat'
 import { Route as AuthenticatedAppHistoryRouteImport } from './routes/_authenticated/app.history'
 import { Route as AuthenticatedAppTradeRouteImport } from './routes/_authenticated/app.trade'
 import { Route as AuthenticatedAppWithdrawRouteImport } from './routes/_authenticated/app.withdraw'
@@ -97,6 +98,11 @@ const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppChatRoute = AuthenticatedAppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppHistoryRoute = AuthenticatedAppHistoryRouteImport.update({
   id: '/history',
   path: '/history',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/verify-email': typeof VerifyEmailRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/app/chat': typeof AuthenticatedAppChatRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
@@ -151,6 +158,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
   '/login/verify': typeof LoginVerifyRoute
+  '/app/chat': typeof AuthenticatedAppChatRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/verify-email': typeof VerifyEmailRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/_authenticated/app/chat': typeof AuthenticatedAppChatRoute
   '/_authenticated/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/_authenticated/app/trade': typeof AuthenticatedAppTradeRoute
   '/_authenticated/app/withdraw': typeof AuthenticatedAppWithdrawRoute
@@ -193,6 +202,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/app'
     | '/login/verify'
+    | '/app/chat'
     | '/app/history'
     | '/app/trade'
     | '/app/withdraw'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/verify-email'
     | '/login/verify'
+    | '/app/chat'
     | '/app/history'
     | '/app/trade'
     | '/app/withdraw'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/_authenticated/app'
     | '/login/verify'
+    | '/_authenticated/app/chat'
     | '/_authenticated/app/history'
     | '/_authenticated/app/trade'
     | '/_authenticated/app/withdraw'
@@ -352,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/chat': {
+      id: '/_authenticated/app/chat'
+      path: '/chat'
+      fullPath: '/app/chat'
+      preLoaderRoute: typeof AuthenticatedAppChatRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/history': {
       id: '/_authenticated/app/history'
       path: '/history'
@@ -398,6 +417,7 @@ const AuthenticatedAppHistoryRouteWithChildren =
   )
 
 interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppChatRoute: typeof AuthenticatedAppChatRoute
   AuthenticatedAppHistoryRoute: typeof AuthenticatedAppHistoryRouteWithChildren
   AuthenticatedAppTradeRoute: typeof AuthenticatedAppTradeRoute
   AuthenticatedAppWithdrawRoute: typeof AuthenticatedAppWithdrawRoute
@@ -405,6 +425,7 @@ interface AuthenticatedAppRouteChildren {
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppChatRoute: AuthenticatedAppChatRoute,
   AuthenticatedAppHistoryRoute: AuthenticatedAppHistoryRouteWithChildren,
   AuthenticatedAppTradeRoute: AuthenticatedAppTradeRoute,
   AuthenticatedAppWithdrawRoute: AuthenticatedAppWithdrawRoute,
