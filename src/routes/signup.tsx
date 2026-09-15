@@ -5,6 +5,8 @@ import { Loader2 } from "lucide-react";
 
 import { AuthShell } from "@/components/AuthShell";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/PasswordInput";
+
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { completeSignup, requestOtp } from "@/lib/auth.functions";
