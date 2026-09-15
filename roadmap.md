@@ -7,67 +7,73 @@ Status key: [ ] not started · [~] in progress · [x] done
 - [x] Lovable Cloud enabled
 - [x] Database: all tables, indexes, row-level security, grants
 - [x] Roles in separate `user_roles` table + `has_role()` check
-- [x] Private storage bucket for card proof images
+- [x] Private storage buckets for card proofs and chat images
 - [x] Brand design tokens (deep-night navy/charcoal, gold-green money accents, display typeface)
+- [x] Display + body fonts loaded (Bricolage Grotesque, Manrope)
 - [x] Shared 5-second branded page loader
-- [x] Seeded admin account (code 197200)
+- [x] Motion kit: card tilt, counting balance, shimmer skeletons, confetti, chime/alert sounds
+- [ ] Seeded admin account (code 197200)
 
-## Phase 2 — Design production
+## Phase 2 — Public site
 
-- [x] Homepage with campaign banner carousel (placeholder art, Canva-swappable)
-- [x] Brand tiles for 12 brands + region flags
+- [x] Homepage: hero, live rate ticker, campaign banners, brand grid
+- [x] Rates page with search
+- [x] Support / FAQ page
+- [x] Terms and Privacy pages
+- [x] Mobile navigation + footer
+- [ ] Real Canva artwork (placeholders in place)
 - [ ] App icon and splash screens
-- [x] Motion: card tilt, counting balance, shimmer skeletons, confetti on approval, chime on credit
 
 ## Phase 3 — Accounts
 
 - [x] Signup (name, email, phone, password)
-- [x] Email 6-digit code, 10-min countdown, 60s resend cooldown, max 5/hour
-- [x] Welcome email
-- [x] Login with fresh code each time; "unrecognized user" for unknown email
-- [x] 3 failed attempts = 30-minute lock, unlock time shown
-- [x] Profile page + unverified ribbon
-- [x] Logout
-- [x] Delete exchange account (typed DELETE + password, blocked if balance/pending)
-- [x] Admin mail-settings screen
+- [x] 6-digit code screens with resend cooldown (60s) and hourly cap
+- [x] Login: unknown email message, 3 failed attempts = 30-minute lock with unlock time
+- [x] Forgot password + set new password
+- [x] Protected member area + logout
+- [~] Email delivery: code and welcome emails are written but cannot be sent until a
+      sending domain is connected. Until then new accounts are verified immediately.
+- [ ] Profile page + unverified ribbon
+- [ ] Delete exchange account (typed DELETE + password, blocked if balance/pending)
+- [ ] Admin mail-settings screen
 
 ## Phase 4 — Trading
 
-- [x] Market grid with brand tiles
-- [x] Region picker (US, UK, DE, AU, CA, IT, FR, CH, NZ, JP, AE, SG)
-- [x] Physical vs e-code paths
-- [x] Live Naira payout preview
-- [x] Photo upload 1–5 / code + PIN
-- [x] Exchange history + status timeline + admin note
-- [x] Balance card with hide/show
+- [x] Member dashboard: balance with hide/show, counting animation, recent trades
+- [ ] Market grid with brand tiles
+- [ ] Region picker (US, UK, DE, AU, CA, IT, FR, CH, NZ, JP, AE, SG)
+- [ ] Physical vs e-code paths
+- [ ] Live Naira payout preview
+- [ ] Photo upload 1–5 / code + PIN
+- [ ] Exchange history + status timeline + admin note
 
 ## Phase 5 — Money out
 
-- [x] Bank accounts (add/delete/default)
-- [x] Withdrawal request, ₦300 fee, total before confirm
-- [x] Balance held at request time
-- [x] Wallet ledger
-- [x] Refunds and manual deductions
+- [ ] Bank accounts (add/delete/default)
+- [ ] Withdrawal request, ₦300 fee, total before confirm
+- [ ] Balance held at request time
+- [ ] Wallet ledger
+- [ ] Refunds and manual deductions
 
 ## Phase 6 — Admin panel (`/ScousGiftCardExchange/admin`)
 
-- [x] Overview
-- [x] Trade queue, unattended badge, sound alert
-- [x] Approve / decline / partial with note
-- [x] Rates per brand + region + value band
-- [x] Market visibility
-- [x] Users: balances, banks, manual credit/debit
-- [x] Withdrawal queue
-- [x] Banner manager
-- [x] Notification broadcaster
-- [x] Mail settings
-- [x] Audit log
+- [ ] Overview
+- [ ] Trade queue, unattended badge, sound alert
+- [ ] Approve / decline / partial with note
+- [ ] Rates per brand + region + value band
+- [ ] Market visibility
+- [ ] Users: balances, banks, manual credit/debit
+- [ ] Withdrawal queue
+- [ ] Banner manager
+- [ ] Notification broadcaster
+- [ ] Mail settings
+- [ ] Audit log
 
 ## Phase 7 — Chat and notifications
 
-- [x] Chat with admin (text + images, trade context)
-- [x] Sound alerts
-- [x] Notification centre
+- [ ] Chat with admin (text + images, trade context)
+- [ ] Sound alerts wired to live events
+- [ ] Notification centre
 - [ ] Push notifications
 
 ## Phase 8 — App packaging
@@ -88,6 +94,7 @@ Status key: [ ] not started · [~] in progress · [x] done
 ## Open items
 
 - Starting rates per brand/region — set in the admin panel at launch
+- Email sending domain — needed before codes and welcome emails can actually be delivered
 - Referrals — not scheduled yet
 - Canva exports — swap in when ready
 - MongoDB is not usable on this runtime; backend is Lovable Cloud (Postgres)
