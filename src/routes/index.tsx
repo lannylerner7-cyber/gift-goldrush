@@ -156,27 +156,26 @@ function Home() {
               Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="bg-surface-2 shimmer h-32 w-[85%] shrink-0 rounded-3xl" />
               ))}
-            {(banners.data ?? []).map((b) => (
+            {(banners.data ?? []).map((b, i) => (
               <article
                 key={b.id}
                 className="border-border/70 bg-surface relative w-[85%] shrink-0 snap-start overflow-hidden rounded-3xl border p-5 sm:w-[46%]"
               >
                 <span
                   className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-30 blur-2xl"
-                  style={{ background: b.accent_color ?? "var(--gold)" }}
+                  style={{ background: i % 2 === 0 ? "var(--gold)" : "var(--money)" }}
                 />
                 <h3 className="font-display relative text-lg font-bold">{b.title}</h3>
                 <p className="text-muted-foreground relative mt-1 text-sm">{b.subtitle}</p>
-                {b.cta_label && (
-                  <Link
-                    to="/signup"
-                    className="text-primary relative mt-4 inline-flex items-center gap-1 text-sm font-semibold"
-                  >
-                    {b.cta_label} <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                )}
+                <Link
+                  to="/signup"
+                  className="text-primary relative mt-4 inline-flex items-center gap-1 text-sm font-semibold"
+                >
+                  Start trading <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
               </article>
             ))}
+
           </div>
         </section>
 
