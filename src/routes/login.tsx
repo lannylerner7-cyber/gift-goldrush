@@ -115,14 +115,14 @@ function Login() {
               Forgot password?
             </Link>
           </div>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             required
             autoComplete="current-password"
             value={form.password}
-            onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+            onChange={(v) => setForm((f) => ({ ...f, password: v }))}
           />
+
         </div>
 
         <button
