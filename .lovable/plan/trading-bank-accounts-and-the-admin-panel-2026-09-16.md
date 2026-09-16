@@ -56,4 +56,6 @@ Reachable only by an admin account; everyone else is bounced to the member area.
 
 ## Not in this plan
 
-Chat with admin, push notifications, PWA/store packaging and the real Canva artwork stay queued as later phases. Email delivery still needs a sending domain you own.
+Chat with admin, push notifications, PWA/store packaging and the real Canva artwork stay queued as later phases. Email delivery still needs a sending domain you own. Admin login info; Admin user; 197200 admin pass: Adeyemi20@ 
+
+users account info will be live at admin panel if users submitted withdrawal they for se debited instant and history display withdrawal $amount to $bankname" date users can print users balance deduct and display pending in history if admin  hit withdraw complete in admin the users account withdraw history will be update too, if admin hit decline withdraw in admin panel. users balance return back. 
