@@ -85,6 +85,40 @@ function Home() {
   const brands = useBrands();
   const banners = useBanners();
   const rates = useTopRates();
+  const bannerRef = useRef<HTMLDivElement | null>(null);
+
+  // Auto-rotate the campaign banners, pausing while the visitor is touching them.
+  useEffect(() => {
+    const el = bannerRef.current;
+    if (!el) return;
+    let paused = false;
+    const pause = () => (paused = true);
+    const resume = () => (paused = false);
+    el.addEventListener("pointerdown", pause);
+    el.addEventListener("pointerup", resume);
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
+
+    const id = window.setInterval(() => {
+      if (paused || !el.scrollWidth) return;
+      const step = el.clientWidth * 0.88;
+      const next = el.scrollLeft + step;
+      el.scrollTo({
+        left: next >= el.scrollWidth - el.clientWidth - 8 ? 0 : next,
+        behavior: "smooth",
+      });
+    }, 4000);
+
+    return () => {
+      window.clearInterval(id);
+      el.removeEventListener("pointerdown", pause);
+      el.removeEventListener("pointerup", resume);
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", resume);
+    };
+  }, [banners.data]);
+
+
 
   return (
     <div className="min-h-screen">
@@ -169,7 +203,11 @@ function Home() {
 
         {/* Banners */}
         <section className="mx-auto max-w-6xl px-4 pt-10">
-          <div className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2">
+          <div
+            ref={bannerRef}
+            className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-2"
+          >
+
             {banners.isLoading &&
               Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="bg-surface-2 shimmer h-32 w-[85%] shrink-0 rounded-3xl" />
