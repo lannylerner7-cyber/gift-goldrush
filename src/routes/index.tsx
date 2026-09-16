@@ -37,7 +37,7 @@ function useBrands() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("gift_card_brands")
-        .select("id, name, slug, accent_color")
+        .select("id, name, slug, accent_color, logo_url")
         .eq("is_visible", true)
         .order("sort_order", { ascending: true });
       if (error) throw error;
