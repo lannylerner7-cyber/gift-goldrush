@@ -21,6 +21,9 @@ Status key: [ ] not started · [~] in progress · [x] done
 - [x] Support / FAQ page
 - [x] Terms and Privacy pages
 - [x] Mobile navigation + footer
+- [x] Real brand logos (Simpleicons + Google logo service, letter fallback)
+- [x] Hero artwork, floating motion, auto-rotating banner carousel
+- [x] Show/hide eye toggle on every password field
 - [ ] Real Canva artwork (placeholders in place)
 - [ ] App icon and splash screens
 
