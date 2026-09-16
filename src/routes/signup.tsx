@@ -118,14 +118,14 @@ function Signup() {
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="password">Password</Label>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             required
             autoComplete="new-password"
             value={form.password}
-            onChange={set("password")}
+            onChange={(v) => setForm((f) => ({ ...f, password: v }))}
           />
+
           <p className="text-muted-foreground text-xs">At least 8 characters.</p>
         </div>
 
