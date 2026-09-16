@@ -123,8 +123,23 @@ function Home() {
                 See today&apos;s rates
               </Link>
             </div>
+
+            <div className="animate-float relative mx-auto mt-10 max-w-lg">
+              <div
+                className="pointer-events-none absolute inset-6 rounded-full opacity-30 blur-3xl"
+                style={{ background: "var(--money)" }}
+              />
+              <img
+                src={heroCards}
+                alt="Gift cards turning into Naira"
+                width={1280}
+                height={960}
+                className="relative w-full rounded-[2rem] shadow-2xl shadow-black/60"
+              />
+            </div>
           </div>
         </section>
+
 
         {/* Rate ticker */}
         <section className="border-border/60 border-y py-3">
