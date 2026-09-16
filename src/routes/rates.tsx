@@ -5,6 +5,7 @@ import { useState } from "react";
 import { PublicFooter, PublicHeader } from "@/components/PublicHeader";
 import { supabase } from "@/integrations/supabase/client";
 import { naira } from "@/lib/format";
+import { BrandLogo } from "@/components/BrandTile";
 
 export const Route = createFileRoute("/rates")({
   head: () => ({
@@ -30,7 +31,7 @@ type Row = {
   card_type: string;
   min_value: number;
   max_value: number;
-  gift_card_brands: { name: string; slug: string } | null;
+  gift_card_brands: { id: string; name: string; slug: string; accent_color: string | null; logo_url: string | null } | null;
   gift_card_regions: { code: string; name: string; currency: string } | null;
 };
 
@@ -43,7 +44,7 @@ function Rates() {
       const { data, error } = await supabase
         .from("gift_card_variants")
         .select(
-          "id, rate_naira, card_type, min_value, max_value, gift_card_brands(name, slug), gift_card_regions(code, name, currency)",
+          "id, rate_naira, card_type, min_value, max_value, gift_card_brands(id, name, slug, accent_color, logo_url), gift_card_regions(code, name, currency)",
         )
         .eq("is_active", true)
         .order("rate_naira", { ascending: false });
@@ -100,7 +101,14 @@ function Rates() {
                 ))}
               {rows.map((r) => (
                 <tr key={r.id} className="border-border/60 hover:bg-surface border-t">
-                  <td className="px-4 py-3 font-semibold">{r.gift_card_brands?.name}</td>
+                  <td className="px-4 py-3 font-semibold">
+                    <span className="flex items-center gap-2">
+                      {r.gift_card_brands && (
+                        <BrandLogo brand={r.gift_card_brands} className="h-7 w-7 shrink-0" />
+                      )}
+                      {r.gift_card_brands?.name}
+                    </span>
+                  </td>
                   <td className="text-muted-foreground px-4 py-3">
                     {r.gift_card_regions?.name} ({r.gift_card_regions?.code})
                   </td>
