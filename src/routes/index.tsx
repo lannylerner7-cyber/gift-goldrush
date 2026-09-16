@@ -1,11 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { ArrowRight, BadgeCheck, ShieldCheck, Zap } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { PublicHeader, PublicFooter } from "@/components/PublicHeader";
 import { BrandTile, BrandTileSkeleton, type BrandLike } from "@/components/BrandTile";
 import { naira } from "@/lib/format";
+import heroCards from "@/assets/hero-cards.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
