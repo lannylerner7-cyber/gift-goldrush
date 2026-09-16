@@ -49,14 +49,14 @@ function ResetPassword() {
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-1.5">
           <Label htmlFor="password">New password</Label>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             required
             autoComplete="new-password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={setPassword}
           />
+
         </div>
         <button
           type="submit"

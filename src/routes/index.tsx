@@ -1,11 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { ArrowRight, BadgeCheck, ShieldCheck, Zap } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { PublicHeader, PublicFooter } from "@/components/PublicHeader";
 import { BrandTile, BrandTileSkeleton, type BrandLike } from "@/components/BrandTile";
 import { naira } from "@/lib/format";
+import heroCards from "@/assets/hero-cards.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,7 +37,7 @@ function useBrands() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("gift_card_brands")
-        .select("id, name, slug, accent_color")
+        .select("id, name, slug, accent_color, logo_url")
         .eq("is_visible", true)
         .order("sort_order", { ascending: true });
       if (error) throw error;
@@ -82,6 +85,40 @@ function Home() {
   const brands = useBrands();
   const banners = useBanners();
   const rates = useTopRates();
+  const bannerRef = useRef<HTMLDivElement | null>(null);
+
+  // Auto-rotate the campaign banners, pausing while the visitor is touching them.
+  useEffect(() => {
+    const el = bannerRef.current;
+    if (!el) return;
+    let paused = false;
+    const pause = () => (paused = true);
+    const resume = () => (paused = false);
+    el.addEventListener("pointerdown", pause);
+    el.addEventListener("pointerup", resume);
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
+
+    const id = window.setInterval(() => {
+      if (paused || !el.scrollWidth) return;
+      const step = el.clientWidth * 0.88;
+      const next = el.scrollLeft + step;
+      el.scrollTo({
+        left: next >= el.scrollWidth - el.clientWidth - 8 ? 0 : next,
+        behavior: "smooth",
+      });
+    }, 4000);
+
+    return () => {
+      window.clearInterval(id);
+      el.removeEventListener("pointerdown", pause);
+      el.removeEventListener("pointerup", resume);
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", resume);
+    };
+  }, [banners.data]);
+
+
 
   return (
     <div className="min-h-screen">
@@ -120,8 +157,23 @@ function Home() {
                 See today&apos;s rates
               </Link>
             </div>
+
+            <div className="animate-float relative mx-auto mt-10 max-w-lg">
+              <div
+                className="pointer-events-none absolute inset-6 rounded-full opacity-30 blur-3xl"
+                style={{ background: "var(--money)" }}
+              />
+              <img
+                src={heroCards}
+                alt="Gift cards turning into Naira"
+                width={1280}
+                height={960}
+                className="relative w-full rounded-[2rem] shadow-2xl shadow-black/60"
+              />
+            </div>
           </div>
         </section>
+
 
         {/* Rate ticker */}
         <section className="border-border/60 border-y py-3">
@@ -151,7 +203,11 @@ function Home() {
 
         {/* Banners */}
         <section className="mx-auto max-w-6xl px-4 pt-10">
-          <div className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2">
+          <div
+            ref={bannerRef}
+            className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-2"
+          >
+
             {banners.isLoading &&
               Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="bg-surface-2 shimmer h-32 w-[85%] shrink-0 rounded-3xl" />
