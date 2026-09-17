@@ -29,6 +29,7 @@ import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_aut
 import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/app.settings'
 import { Route as AuthenticatedAppTradeRouteImport } from './routes/_authenticated/app.trade'
 import { Route as AuthenticatedAppWithdrawRouteImport } from './routes/_authenticated/app.withdraw'
+import { Route as AuthenticatedAppHistoryIndexRouteImport } from './routes/_authenticated/app.history.index'
 import { Route as AuthenticatedAppHistoryTradeIdRouteImport } from './routes/_authenticated/app.history.$tradeId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -133,6 +134,12 @@ const AuthenticatedAppWithdrawRoute =
     path: '/withdraw',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppHistoryIndexRoute =
+  AuthenticatedAppHistoryIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAppHistoryRoute,
+  } as any)
 const AuthenticatedAppHistoryTradeIdRoute =
   AuthenticatedAppHistoryTradeIdRouteImport.update({
     id: '/$tradeId',
@@ -161,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/app/': typeof AuthenticatedAppIndexRoute
   '/app/history/$tradeId': typeof AuthenticatedAppHistoryTradeIdRoute
+  '/app/history/': typeof AuthenticatedAppHistoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -175,13 +183,13 @@ export interface FileRoutesByTo {
   '/verify-email': typeof VerifyEmailRoute
   '/login/verify': typeof LoginVerifyRoute
   '/app/chat': typeof AuthenticatedAppChatRoute
-  '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/trade': typeof AuthenticatedAppTradeRoute
   '/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/app': typeof AuthenticatedAppIndexRoute
   '/app/history/$tradeId': typeof AuthenticatedAppHistoryTradeIdRoute
+  '/app/history': typeof AuthenticatedAppHistoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/_authenticated/app/withdraw': typeof AuthenticatedAppWithdrawRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/app/history/$tradeId': typeof AuthenticatedAppHistoryTradeIdRoute
+  '/_authenticated/app/history/': typeof AuthenticatedAppHistoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -230,6 +239,7 @@ export interface FileRouteTypes {
     | '/app/withdraw'
     | '/app/'
     | '/app/history/$tradeId'
+    | '/app/history/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -244,13 +254,13 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/login/verify'
     | '/app/chat'
-    | '/app/history'
     | '/app/notifications'
     | '/app/settings'
     | '/app/trade'
     | '/app/withdraw'
     | '/app'
     | '/app/history/$tradeId'
+    | '/app/history'
   id:
     | '__root__'
     | '/'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/withdraw'
     | '/_authenticated/app/'
     | '/_authenticated/app/history/$tradeId'
+    | '/_authenticated/app/history/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -432,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppWithdrawRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/history/': {
+      id: '/_authenticated/app/history/'
+      path: '/'
+      fullPath: '/app/history/'
+      preLoaderRoute: typeof AuthenticatedAppHistoryIndexRouteImport
+      parentRoute: typeof AuthenticatedAppHistoryRoute
+    }
     '/_authenticated/app/history/$tradeId': {
       id: '/_authenticated/app/history/$tradeId'
       path: '/$tradeId'
@@ -444,11 +462,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAppHistoryRouteChildren {
   AuthenticatedAppHistoryTradeIdRoute: typeof AuthenticatedAppHistoryTradeIdRoute
+  AuthenticatedAppHistoryIndexRoute: typeof AuthenticatedAppHistoryIndexRoute
 }
 
 const AuthenticatedAppHistoryRouteChildren: AuthenticatedAppHistoryRouteChildren =
   {
     AuthenticatedAppHistoryTradeIdRoute: AuthenticatedAppHistoryTradeIdRoute,
+    AuthenticatedAppHistoryIndexRoute: AuthenticatedAppHistoryIndexRoute,
   }
 
 const AuthenticatedAppHistoryRouteWithChildren =
