@@ -22,6 +22,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as LoginVerifyRouteImport } from './routes/login.verify'
+import { Route as AuthenticatedScousGiftCardExchangeAdminRouteImport } from './routes/_authenticated/ScousGiftCardExchange.admin'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppChatRouteImport } from './routes/_authenticated/app.chat'
 import { Route as AuthenticatedAppHistoryRouteImport } from './routes/_authenticated/app.history'
@@ -96,6 +97,12 @@ const LoginVerifyRoute = LoginVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => LoginRoute,
 } as any)
+const AuthenticatedScousGiftCardExchangeAdminRoute =
+  AuthenticatedScousGiftCardExchangeAdminRouteImport.update({
+    id: '/ScousGiftCardExchange/admin',
+    path: '/ScousGiftCardExchange/admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -160,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/verify-email': typeof VerifyEmailRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/ScousGiftCardExchange/admin': typeof AuthenticatedScousGiftCardExchangeAdminRoute
   '/app/chat': typeof AuthenticatedAppChatRoute
   '/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -182,6 +190,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/verify-email': typeof VerifyEmailRoute
   '/login/verify': typeof LoginVerifyRoute
+  '/ScousGiftCardExchange/admin': typeof AuthenticatedScousGiftCardExchangeAdminRoute
   '/app/chat': typeof AuthenticatedAppChatRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/settings': typeof AuthenticatedAppSettingsRoute
@@ -206,6 +215,7 @@ export interface FileRoutesById {
   '/verify-email': typeof VerifyEmailRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/login/verify': typeof LoginVerifyRoute
+  '/_authenticated/ScousGiftCardExchange/admin': typeof AuthenticatedScousGiftCardExchangeAdminRoute
   '/_authenticated/app/chat': typeof AuthenticatedAppChatRoute
   '/_authenticated/app/history': typeof AuthenticatedAppHistoryRouteWithChildren
   '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/app'
     | '/login/verify'
+    | '/ScousGiftCardExchange/admin'
     | '/app/chat'
     | '/app/history'
     | '/app/notifications'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/verify-email'
     | '/login/verify'
+    | '/ScousGiftCardExchange/admin'
     | '/app/chat'
     | '/app/notifications'
     | '/app/settings'
@@ -276,6 +288,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/_authenticated/app'
     | '/login/verify'
+    | '/_authenticated/ScousGiftCardExchange/admin'
     | '/_authenticated/app/chat'
     | '/_authenticated/app/history'
     | '/_authenticated/app/notifications'
@@ -394,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginVerifyRouteImport
       parentRoute: typeof LoginRoute
     }
+    '/_authenticated/ScousGiftCardExchange/admin': {
+      id: '/_authenticated/ScousGiftCardExchange/admin'
+      path: '/ScousGiftCardExchange/admin'
+      fullPath: '/ScousGiftCardExchange/admin'
+      preLoaderRoute: typeof AuthenticatedScousGiftCardExchangeAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/app/': {
       id: '/_authenticated/app/'
       path: '/'
@@ -501,10 +521,13 @@ const AuthenticatedAppRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedScousGiftCardExchangeAdminRoute: typeof AuthenticatedScousGiftCardExchangeAdminRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedScousGiftCardExchangeAdminRoute:
+    AuthenticatedScousGiftCardExchangeAdminRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
